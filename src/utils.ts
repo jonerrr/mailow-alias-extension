@@ -115,7 +115,7 @@ export async function generateAlias(
 ): Promise<Alias> {
   const address = generateEmail(settings, hostname)
   // const hash = await generateHash(hostname ?? "no")
-  const hash = hostname ?? 'nohostname'
+  const hash = hostname ?? "nohostname"
   // although mailcow has its own date, the format they use sucks
   const createdAt = Date.now()
 
@@ -228,12 +228,20 @@ export function generateEmail(
 ): string {
   switch (settings.generationMethod) {
     case GenerationMethod.RandomCharacters:
-      return `${randAlphaNumeric({ length: 16 }).join("")}@${settings.aliasDomain
-        }`
+      return `${randAlphaNumeric({ length: 16 }).join("")}@${
+        settings.aliasDomain
+      }`
 
     case GenerationMethod.RandomName:
-      const domain = settings.aliasDomain.split(".") ?? "example.com"
-      return randEmail({ provider: domain[0], suffix: domain[1] })
+      console.log(settings)
+      if (!settings.aliasDomain) {
+        return randEmail({ provider: "example", suffix: "com" })
+      }
+      const domain = settings.aliasDomain.split(".")
+      const suffix = domain.pop()
+      const provider = domain.join(".")
+
+      return randEmail({ provider, suffix })
 
     // case GenerationMethod.WebsiteURL:
     //   return `${hostname.replace(".", "_")}_${faker.random.numeric(3)}@${

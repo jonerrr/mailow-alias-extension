@@ -1,5 +1,4 @@
 import { Storage } from "@plasmohq/storage"
-
 import { type Settings, generateAlias } from "~utils"
 
 chrome.runtime.onInstalled.addListener(async (details) => {
@@ -58,10 +57,10 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
           message: "copyText",
           textToCopy: alias.address
         },
-        function (response) { }
+        function (response) {}
       )
     })
   }
 })
 
-export { }
+export {}
